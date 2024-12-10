@@ -13,4 +13,4 @@ RUN pip install -r requirements.txt
 # Copy the project code into the container
 COPY .. /app/
 EXPOSE 10000
-CMD ["python3", "run.py"]
+CMD ["python3", "bot.py"]

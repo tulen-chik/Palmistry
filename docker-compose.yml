@@ -12,7 +12,7 @@ services:
 
   telebot:
     build:
-      context: src
+      context: .
       dockerfile: Dockerfile
     container_name: telebot
     restart: always

@@ -4,7 +4,6 @@ from services.google_service import find_nearby_places
 from services.user_service import update_favorite_places
 import telebot
 
-bot = telebot.TeleBot(API_TOKEN)
 
 
 def get_places(user_id, latitude, longitude):

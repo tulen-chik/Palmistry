@@ -9,11 +9,20 @@ def add_mood(name):
     session.commit()
     session.close()
 
-def get_mood(mood_id):
-    """Получает настроение по его идентификатору."""
+
+def get_mood(mood_id=None, name=None):
+    """Получает настроение по его идентификатору или имени."""
     session = Session()
-    mood = session.query(Mood).filter_by(id=mood_id).first()
-    session.close()
+    try:
+        if mood_id is not None:
+            mood = session.query(Mood).filter_by(id=mood_id).first()
+        elif name is not None:
+            mood = session.query(Mood).filter_by(name=name).first()
+        else:
+            mood = None  # Если ни id, ни name не переданы
+    finally:
+        session.close()
+
     return mood
 
 def get_all_moods():

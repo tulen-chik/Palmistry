@@ -1,9 +1,11 @@
 import requests
+import os
+import json
 from config import engine
 
 def find_nearby_places(latitude, longitude, places_query):
     # Формируем URL для запроса к API Google Places
-    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={latitude},{longitude}&type={places_query}&radius=5000&key={os.environ['GOOGLE_API_KEY']}"
+    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={latitude},{longitude}&type={places_query}&radius=5000&key={os.environ['GOOGLE_MAPS_KEY']}"
 
     # Отправляем GET-запрос
     response = requests.get(url)
@@ -18,7 +20,7 @@ def find_nearby_places(latitude, longitude, places_query):
             name = result['name']
             vicinity = result.get('vicinity', 'Нет описания')
             rating = result.get('rating', 'Нет оценок')
-            avatar = result.get('photos', 'Нет аватара').get('photo_reference')
+            avatar = json.loads(result.get('photos', 'Нет аватара')[0]).get('photo_reference')
 
             places.append({
                 'название': name,
@@ -32,4 +34,4 @@ def find_nearby_places(latitude, longitude, places_query):
         return []# Возвращаем пустой список в случае ошибки
 
 def get_place_image(place_name):
-    return requests.get(f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference={place_name}&key={os.environ['GOOGLE_API_KEY']}")
+    return requests.get(f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference={place_name}&key={os.environ['GOOGLE_MAPS_KEY']}")

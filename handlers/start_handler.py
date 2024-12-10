@@ -1,17 +1,16 @@
-from config import user_profiles
-from bd.user import get_user, add_user
+from config import user_profiles, bot
+from bd.user import get_user, add_user, update_user
+from bd.mood import get_mood
 from utils.keyboard import generate_personality_keyboard, generate_main_menu_keyboard, generate_location_keyboard
-import telebot
-
-bot = telebot.TeleBot(os.environ.get("TOKEN"))
-API_URL = os.environ['API_SERVER_URL']
+import os
 
 def start_handler(message):
-    user_id = message.from_user.id  # Get the Telegram user ID
-    add_user(user_id)
+    user_id = message.from_user.id  # Получаем ID пользователя Telegram
 
-    # Create the link for the GET request
-    if user_id not in user_profiles:
+    # Проверяем, существует ли пользователь в базе данных
+    user = get_user(user_id)
+    if user is None:
+        add_user(user_id)  # Добавляем пользователя, если его нет
         bot.send_message(user_id, "🌟 Выбери один из вариантов: 🌈\n\n1. Интроверт\n2. Амбиверт\n3. Экстраверт",
                          reply_markup=generate_personality_keyboard())
     else:
@@ -20,6 +19,7 @@ def start_handler(message):
 def choose_personality(message):
     user_id = message.chat.id
     personality_choice = message.text
+    update_user(user_id, get_mood(name=personality_choice).id)
 
     if user_id not in user_profiles:
         user_profiles[user_id] = {

@@ -1,5 +1,5 @@
 from config import Session
-from models.users import Users
+from models.user import Users
 
 def add_user(id_telegram, mood_id=None):
     """Добавляет нового пользователя в базу данных с опциональным настроением."""
