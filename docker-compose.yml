@@ -25,9 +25,22 @@ services:
       - 10000
     depends_on:
       - db
+      - api_server
     env_file:
       - .env
 
+  api_server:
+    build:
+      context: api_server
+      dockerfile: Dockerfile
+    container_name: flask_server
+    restart: always
+    ports:
+      - "80:5000"
+    depends_on:
+      - db
+    env_file:
+      - .env
 
 volumes:
   static:
