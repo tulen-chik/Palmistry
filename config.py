@@ -1,5 +1,10 @@
-API_TOKEN = '7657126359:AAFk5nGrVwsS_6FVl8Dw866k2bOp58lC2ho'
-YANDEX_API_KEY = 'YOUR_YANDEX_API_KEY_HERE'
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+
+# Настройки подключения к базе данных
+engine = create_engine(os.environ.get('DATABASE_URL'))
+Base = declarative_base()
+Session = sessionmaker(bind=engine)
 
 user_profiles = {}
 

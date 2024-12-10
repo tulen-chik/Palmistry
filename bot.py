@@ -1,12 +1,13 @@
 import telebot
-from config import API_TOKEN
+from config import Base, engine
+from bd.seeder import seed_moods, seed_type_places
 from handlers.start_handler import start_handler, choose_personality
 from handlers.location_handler import handle_location
 from handlers.profile_handler import register_profile_handlers  # Import the registration function
 from handlers.filter_handler import filter_places
 from utils.keyboard import generate_main_menu_keyboard
 
-bot = telebot.TeleBot(API_TOKEN)
+bot = telebot.TeleBot(os.environ['TELEGRAM_BOT_TOKEN'])
 
 @bot.message_handler(commands=['start'])
 def start_command(message):
@@ -29,6 +30,9 @@ def filter_command(message):
     filter_places(message)
 
 def main():
+    Base.metadata.create_all(engine)
+    seed_moods()
+    seed_type_places()
     register_profile_handlers(bot)  # Register profile handlers
     bot.polling(none_stop=True)
 

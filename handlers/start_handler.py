@@ -1,13 +1,18 @@
-from config import API_TOKEN,user_profiles
+from config import user_profiles
+from bd.user import get_user, add_user
 from utils.keyboard import generate_personality_keyboard, generate_main_menu_keyboard, generate_location_keyboard
 import telebot
 
-bot = telebot.TeleBot(API_TOKEN)
+bot = telebot.TeleBot(os.environ.get("TOKEN"))
+API_URL = os.environ['API_SERVER_URL']
 
 def start_handler(message):
-    user_id = message.chat.id
+    user_id = message.from_user.id  # Get the Telegram user ID
+    add_user(user_id)
+
+    # Create the link for the GET request
     if user_id not in user_profiles:
-        bot.send_message(user_id, "Привет! 🌟 Выбери один из вариантов: 🌈\n\n1. Интроверт\n2. Амбиверт\n3. Экстраверт",
+        bot.send_message(user_id, "🌟 Выбери один из вариантов: 🌈\n\n1. Интроверт\n2. Амбиверт\n3. Экстраверт",
                          reply_markup=generate_personality_keyboard())
     else:
         main_menu(message)
