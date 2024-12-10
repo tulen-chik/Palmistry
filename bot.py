@@ -2,7 +2,7 @@ import telebot
 from config import API_TOKEN
 from handlers.start_handler import start_handler, choose_personality
 from handlers.location_handler import handle_location
-from handlers.profile_handler import show_profile
+from handlers.profile_handler import register_profile_handlers  # Import the registration function
 from handlers.filter_handler import filter_places
 from utils.keyboard import generate_main_menu_keyboard
 
@@ -22,15 +22,15 @@ def location_command(message):
 
 @bot.message_handler(commands=['profile'])
 def profile_command(message):
-    show_profile(message)
+    bot.send_message(message.chat.id, "Загрузка профиля...", reply_markup=generate_main_menu_keyboard())
 
 @bot.message_handler(commands=['filter'])
 def filter_command(message):
     filter_places(message)
 
-def main_menu(message):
-    user_id = message.chat.id
-    bot.send_message(user_id, "Выберите действие: 🍽️🌳📸🛍️🏛️", reply_markup=generate_main_menu_keyboard())
+def main():
+    register_profile_handlers(bot)  # Register profile handlers
+    bot.polling(none_stop=True)
 
-# Основной цикл
-bot.polling(none_stop=True)
+if __name__ == "__main__":
+    main()
