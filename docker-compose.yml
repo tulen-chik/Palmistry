@@ -1,0 +1,47 @@
+version: '3'
+services:
+  db:
+    image: postgres:15
+    container_name: postgres
+    restart: always
+    volumes:
+      - data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+
+  telebot:
+    build:
+      context: src
+      dockerfile: Dockerfile
+    container_name: telebot
+    restart: always
+    volumes:
+      - static:/static
+    ports:
+      - "10000:10000"
+    expose:
+      - 10000
+    depends_on:
+      - db
+      - api_server
+    env_file:
+      - .env
+
+  api_server:
+    build:
+      context: api_server
+      dockerfile: Dockerfile
+    container_name: flask_server
+    restart: always
+    ports:
+      - "80:5000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+
+volumes:
+  static:
+  data:
