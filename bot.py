@@ -8,6 +8,7 @@ from handlers.filter_handler import filter_places
 from handlers.coupon_handler import start_location_request, start_location_response, place_selection_request
 from utils.keyboard import generate_main_menu_keyboard
 from handlers.location_handler import send_places
+from mini_app.mini_app import game
 # from AI import AI
 
 @bot.message_handler(commands=['start'])
@@ -55,6 +56,11 @@ def handle_place_selection(message):
 @bot.message_handler(content_types=["location"])
 def handle_location(message):
     start_location_response(message)
+
+
+@bot.message_handler(content_types=["game"])
+def game_start(message):
+    game(message)
 
 
 def main():
