@@ -6,6 +6,7 @@ from handlers.location_handler import handle_location
 from handlers.profile_handler import register_profile_handlers  # Import the registration function
 from handlers.filter_handler import filter_places
 from utils.keyboard import generate_main_menu_keyboard
+from AI import AI
 
 @bot.message_handler(commands=['start'])
 def start_command(message):
@@ -31,6 +32,7 @@ def main():
     Base.metadata.create_all(engine)
     seed_moods()
     seed_type_places()
+    AI.initAI()
     register_profile_handlers(bot)  # Register profile handlers
     bot.polling(none_stop=True)
 

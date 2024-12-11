@@ -8,3 +8,7 @@ class Place_dataclass:
     avatar: str
     points: int
     review: str
+
+    latitude: float
+    longitude: float
+    category: str
