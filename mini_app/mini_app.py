@@ -1,8 +1,13 @@
+import os
 from aiogram import Bot, Dispatcher, types
-from config import API_TOKEN
+from dotenv import load_dotenv
 from aiogram.types.web_app_info import WebAppInfo
 
-bot = Bot(token=API_TOKEN)
+load_dotenv()
+
+TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
+
+bot = Bot(token=TELEGRAM_BOT_TOKEN)
 dp = Dispatcher()
 
 @dp.message_handler(commands=['game'])
