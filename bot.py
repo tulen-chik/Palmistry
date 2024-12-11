@@ -5,11 +5,11 @@ from handlers.start_handler import start_handler, choose_personality
 from handlers.location_handler import handle_location
 from handlers.profile_handler import register_profile_handlers  # Import the registration function
 from handlers.filter_handler import filter_places
-from handlers.coupon_handler import start_location_request, start_location_response, place_selection_request
+from handlers.coupon_handler import place_selection_request
+from handlers.start_handler import start_location_request, start_location_response
 from utils.keyboard import generate_main_menu_keyboard
 from handlers.location_handler import send_places
-from mini_app.mini_app import game
-# from AI import AI
+# from mini_app.mini_app import game
 from AI import AI
 import logging
 
