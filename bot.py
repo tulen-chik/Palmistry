@@ -6,7 +6,7 @@ from handlers.location_handler import handle_location
 from handlers.profile_handler import register_profile_handlers  # Import the registration function
 from handlers.filter_handler import filter_places
 from utils.keyboard import generate_main_menu_keyboard
-from mini_app.mini_app import game
+from AI import AI
 
 @bot.message_handler(commands=['start'])
 def start_command(message):
@@ -28,15 +28,11 @@ def profile_command(message):
 def filter_command(message):
     filter_places(message)
 
-@bot.message_handler(commands=['game'])
-def game_command(message):
-    game(message)
-
-
 def main():
     Base.metadata.create_all(engine)
     seed_moods()
     seed_type_places()
+    AI.initAI()
     register_profile_handlers(bot)  # Register profile handlers
     bot.polling(none_stop=True)
 

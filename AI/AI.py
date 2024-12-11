@@ -25,18 +25,13 @@ label_map = {
 }
 
 
-# Загрузка модели и токенизатора
-model = BertForSequenceClassification.from_pretrained("./my_model")
-tokenizer = BertTokenizer.from_pretrained("./my_model")
+def initAI():
+    model = BertForSequenceClassification.from_pretrained("./fine_tuned_model")
+    tokenizer = BertTokenizer.from_pretrained("./fine_tuned_model")
+    global text_classification
+    text_classification = pipeline("text-classification", model=model, tokenizer=tokenizer)
 
-
-# Создание конвейера для классификации текста с использованием обученной модели
-text_classification = pipeline("text-classification", model=model, tokenizer=tokenizer)
-
-# Ввод пользователя
-user_input = "Ищу мастерскую для ремонта обуви"
-
-# Определение категории
-result = text_classification(user_input)
-category = list(label_map.keys())[list(label_map.values()).index(int(result[0]['label'][-1]))]
-print(f"Категория поиска: {category}")
+def generateCategory(user_input: str):
+    result = text_classification(user_input)
+    category = list(label_map.keys())[list(label_map.values()).index(int(result[0]['label'][-1]))]
+    return category
