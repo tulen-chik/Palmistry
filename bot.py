@@ -5,6 +5,7 @@ from handlers.start_handler import start_handler, choose_personality
 from handlers.location_handler import handle_location
 from handlers.portfolio_handler import response_profile  # Import the registration function
 from handlers.filter_handler import filter_places
+from bd.place import get_all_places
 from handlers.coupon_handler import place_selection_request
 from handlers.start_handler import start_location_request, start_location_response, start_location_response_categorized
 from utils.keyboard import generate_main_menu_keyboard
@@ -13,6 +14,25 @@ from handlers.location_handler import send_places
 from telebot import types
 from AI import AI
 import logging
+
+
+@bot.message_handler(commands=['profile'])
+def handle_profile(message):
+    # Получение топ-3 мест по количеству
+    top_places = get_all_places(sort_by_visits=True)[:3]
+
+    # Получение топ-3 мест по очкам
+    top_points = get_all_places(sort_by_points=True)[:3]
+
+    response = "🏆 **Топ 3 мест по количеству:**\n"
+    for name, count, _ in top_places:
+        response += f"- {name}: {count} мест\n"
+
+    response += "\n🌟 **Топ 3 мест по очкам:**\n"
+    for name, _, total_points in top_points:
+        response += f"- {name}: {total_points} очков\n"
+
+    bot.send_message(message.chat.id, response, parse_mode='Markdown')
 
 @bot.message_handler(commands=['start'])
 def start_command(message):
@@ -47,7 +67,7 @@ def callback_handler(call):
 @bot.message_handler(content_types=['location'])
 def location_command(message):
     handle_location(message)
-
+    
 @bot.message_handler(commands=['filter'])
 def filter_command(message):
     filter_places(message)
@@ -97,8 +117,6 @@ def main():
     Base.metadata.create_all(engine)
     seed_moods()
     seed_type_places()
-    AI.initAI()
-    logging.warning("sosi") # Register profile handlers
     bot.polling(none_stop=True)
 
 if __name__ == "__main__":
