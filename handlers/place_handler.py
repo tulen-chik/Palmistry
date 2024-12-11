@@ -6,6 +6,9 @@ from telebot import types
 from telebot.types import KeyboardButton, ReplyKeyboardMarkup
 import telebot
 import os
+import logging
+import recomendations
+from models.userDataClass import User_dataclass
 
 
 
@@ -15,8 +18,16 @@ def get_places(user_id, latitude, longitude):
     places_query = '|'.join(preferred_places)
 
     places = find_nearby_places(latitude, longitude, places_query)
-
-    return places
+    logging.warning(places)
+    # Сохраняем найденные места в состоянии пользователя
+    user_profiles[user_id] = {'places': places, 'awaiting_rating': False}
+    places = recomendations.recommend_places(User_dataclass(id=0,id_telegram=user_id,mood_id=3,latitude=latitude,longitude=longitude),
+                                             places,[""])
+    logging.warning(user_profiles)
+    places_refactor = []
+    for place in places:
+        places_refactor.append(place[1])
+    return places[::-1]
 
 
 current_place_index = 0

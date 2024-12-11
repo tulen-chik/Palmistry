@@ -16,6 +16,74 @@ from config import Base, engine, bot, user_profiles
 from bd.seeder import seed_moods, seed_type_places
 from handlers.profile_handler import register_profile_handlers 
 import logging
+
+category_resolving_map = {
+    'locality': 'Парки',
+    'political': 'Туристические агентства',
+    'tourist_attraction': 'Парки',
+    'school': 'Квест-комнаты',
+    'local_government_office': "Библиотека",
+    'library': "Библиотека",
+    'museum': 'Музеи',
+    'art_gallery': 'Пикниковые зоны',
+    'university': "Киберспортивные арены",
+    'church': "Квест-комнаты",
+    'cemetery': "Книжные клубы",
+    'aquarium': 'Спортивные клубы',
+    'zoo': 'Ночные клубы',
+    'lodging': "Пикниковые зоны",
+    'restaurant': "Кафе",
+    'food': 'Кафе',
+    "point_of_interest": "Мастер-классы",
+    'establishment': 'Игровые кафе',
+    'finance': "Студии йоги",
+    'store': 'Книжные магазины',
+    'health': "Киберспортивные арены",
+    'cafe': "Кафе",
+    'gym': "Спортивные клубы",
+    'hospital': "Киберспортивные турниры",
+    'bank': "Волонтерские организации",
+    'pharmacy': "Танцевальные студии",
+    'supermarket': "Киберспортивные турниры",
+    'shopping_mall': "Мастерские",
+    'pet_store': "Мастер-классы",
+    'laundry': "Концертные залы",
+    'car_repair': "Киберспортивные турниры",
+    'gas_station': "Волонтерские организации",
+    "casino": "Ночные клубы",
+    "bar": "Ночные клубы",
+    'night_club': "Ночные клубы",
+    "electronics_store": "Книжные клубы",
+    'jewelry_store': "Танцевальные студии",
+    "amusement_park": "Парк",
+    'bowling_alley': "Игровые кафе",
+    'movie_theater': "Киберспортивные арены",
+    'stadium': "Спортивные клубы"
+}
+
+label_map = {
+    "Ночные клубы": 0,
+    "Спортивные клубы": 1,
+    "Киберспортивные арены": 2,
+    "Кафе": 3,
+    "Танцевальные студии": 4,
+    "Туристические агентства": 5,
+    "Волонтерские организации": 6,
+    "Библиотеки": 7,
+    "Книжные магазины": 8,
+    "Игровые кафе": 9,
+    "Мастерские": 10,
+    "Парки": 11,
+    "Студии йоги": 12,
+    "Музеи": 13,
+    "Квест-комнаты": 14,
+    "Книжные клубы": 15,
+    "Концертные залы": 16,
+    "Киберспортивные турниры": 17,
+    "Пикниковые зоны": 18,
+    "Мастер-классы": 19
+}
+
 # Пример данных о местах
 #places = pd.DataFrame({
 #    'name': ['Place A', 'Place B', 'Place C'],
