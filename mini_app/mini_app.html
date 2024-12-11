@@ -1,118 +1,324 @@
+<!--49-53 - тут просто ВСЕ партнеры-->
+
+<!--64 - тут пользователь тип локацию скидывает и по идее надо сравнить где -->
+<!--находится точка партнера(любого) и где находится чел и определить к какому партнеру-->
+<!--он сходил(это то, что мы говорим, по факту функционал - переход на страницу с кодом,-->
+<!--который рандомом сгенериться даже не на сайте)-->
+
+<!--72-80 - тут вывести просто всех "партнеров"-->
+
+<!--242-272 - тут по категориям партнеры-->
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="mini_app.css">
-    <title>Социальные сети</title>
+    <title>Мини_квесты</title>
 </head>
 <body>
+    <?php
+    $host = "localhost"; // Адрес сервера
+    $port = "5432"; // Порт
+    $dbname = "database_name"; // Имя базы данных
+    $user = "username"; // Имя пользователя
+    $password = "password"; // Пароль
+
+    // Создание подключения
+    $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
+    if (!$conn) {
+        die("Ошибка подключения: " . pg_last_error());
+    }
+    ?>
+
     <header>
         <div class="search-bar">
-            <input type="text" placeholder="Выполните поиск по шаблонам и дизайнам">
+            <input type="text" placeholder="Выполните поиск по категориям партнеров">
         </div>
     </header>
 
     <main>
         <div class="banner">
-            <h1>Откройте для себя соцсети</h1>
-            <button>Что нового?</button>
+            <h1>Ежедневный квест</h1>
+            <button id="start-quest">Пройти</button>
         </div>
 
         <div class="icon-container">
-            <div class="icon">Документ</div>
-            <div class="icon">Интерактив на доске</div>
-            <div class="icon">Презентация</div>
-            <div class="icon">Видео</div>
-            <div class="icon">Сайт</div>
-            <div class="icon">Настраиваемый мой размер</div>
-            <div class="icon">Загрузить</div>
+            <div class="icon" data-category="restaurants">Рестораны</div>
+            <div class="icon" data-category="museums">Музеи</div>
+            <div class="icon" data-category="exhibitions">Выставки</div>
+            <div class="icon" data-category="stores">Магазины</div>
+            <div class="icon" data-category="cafes">Кофейни</div>
+            <div class="icon" data-category="theaters">Театры</div>
+            <div class="icon" data-category="others">Остальные категории</div>
         </div>
 
         <section class="designs">
-            <h2>Последние дизайны</h2>
-            <div class="design">Создай изображение</div>
-            <div class="design">Напиши текст</div>
-            <div class="design">Измени мой размер</div>
-            <div class="design">Удаленный элемент</div>
+            <h2>Последние посещеннные</h2>
+            <div class="design">...</div>
+            <div class="design">...</div>
+            <div class="design">...</div>
+            <div class="design">...</div>
         </section>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #f5f5f5;
-            }
-
-            header {
-                background-color: #333;
-                padding: 20px;
-            }
-
-            .search-bar {
-                display: flex;
-                justify-content: center;
-            }
-
-            .search-bar input {
-                width: 60%;
-                padding: 10px;
-                border: none;
-                border-radius: 5px;
-            }
-
-            .banner {
-                background-color: #ff4c4c;
-                color: white;
-                text-align: center;
-                padding: 40px 20px;
-            }
-
-            .banner h1 {
-                margin: 0;
-            }
-
-            .banner button {
-                padding: 10px 20px;
-                border: none;
-                border-radius: 5px;
-                background-color: #fff;
-                color: #ff4c4c;
-                font-weight: bold;
-                cursor: pointer;
-            }
-
-            .icon-container {
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-                margin: 20px 0;
-            }
-
-            .icon {
-                background-color: white;
-                border-radius: 10px;
-                margin: 10px;
-                padding: 15px;
-                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-                text-align: center;
-                flex: 1 0 150px; /* позволяет элементам растягиваться */
-            }
-
-            .designs {
-                text-align: center;
-                margin-top: 20px;
-            }
-
-            .design {
-                background-color: #e0e0e0;
-                margin: 10px;
-                padding: 15px;
-                border-radius: 10px;
-                display: inline-block;
-            }
-        </style>
     </main>
+
+    <div id="quest-page" class="quest-page" style="display:none;">
+        <div class="quest-container">
+            <h2>Пройди квест - получи приятный бонус!</h2>
+            <p>Для получения сегодняшнего уникального бонуса вам необходимо посетить одного из наших партнеров</p>
+            <p>И отправить вашу локацию для того, чтобы мы знали какие наши партнеры вам нравятся больше всего)</p>
+            <button class="location">Скинуть локацию</button>
+            <button id="partners">Партнеры</button>
+            <button id="back-to-main">Назад в главное меню</button>
+        </div>
+    </div>
+
+
+    <div id="partners-page" class="partners-page" style="display:none;">
+        <h2>Наши Партнеры</h2>
+        <ul>
+            <li>Ресторан "Вкусно и точка"</li>
+            <li>Музей "Истории города"</li>
+            <li>Выставка "Современное искусство"</li>
+            <li>Магазин "Лучшие товары"</li>
+            <li>Кофейня "Ароматная чашка"</li>
+            <li>Театр "Золотая маска"</li>
+        </ul>
+        <button id="back-to-quest">Назад</button>
+    </div>
+
+    <div id="category-page" class="category-page" style="display:none;">
+        <h2 id="category-title"></h2>
+        <ul id="category-list"></ul>
+        <button id="back-to-icons">Назад</button>
+    </div>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            background-color: #333;
+            padding: 20px;
+        }
+
+        .search-bar {
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-bar input {
+            width: 60%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .banner {
+            background-color: #ff4c4c;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .banner h1 {
+            margin: 0;
+        }
+
+        .banner button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #fff;
+            color: #ff4c4c;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .icon {
+            background-color: white;
+            border-radius: 10px;
+            margin: 10px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1 0 150px;
+            cursor: pointer;
+        }
+
+        .designs {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .design {
+            background-color: #e0e0e0;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .quest-page {
+            background-color: #f9e4d3;
+            padding: 40px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .quest-container {
+            max-width: 600px;
+        }
+
+        .quest-container h2 {
+            font-size: 24px;
+            color: #6a4a4a;
+        }
+
+        .quest-container p {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .partners-page, .category-page {
+            padding: 40px;
+            text-align: center;
+        }
+
+        .partners-page h2, .category-page h2 {
+            font-size: 24px;
+        }
+
+        .partners-page ul, .category-page ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .partners-page li, .category-page li {
+            font-size: 18px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .learn-more {
+            padding: 10px 20px;
+            background-color: #6a4a4a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+
+<script>
+    // Функция для извлечения параметров из URL
+    function getQueryParams() {
+        const params = {};
+        window.location.search.substring(1).split("&").forEach(function(pair) {
+            const [key, value] = pair.split('=');
+            params[decodeURIComponent(key)] = decodeURIComponent(value);
+        });
+        return params;
+    }
+
+    // Извлечение данных из URL
+    const queryParams = getQueryParams();
+    const typePlaces = queryParams.type_places ? queryParams.type_places.split(',') : [];
+    const moods = queryParams.moods ? queryParams.moods.split(',') : [];
+
+    // Заполнение списков на странице
+    document.addEventListener('DOMContentLoaded', function() {
+        const typePlacesList = document.getElementById('type-places-list');
+        const moodsList = document.getElementById('moods-list');
+
+        typePlacesList.innerHTML = typePlaces.map(place => `<li>${place}</li>`).join('');
+        moodsList.innerHTML = moods.map(mood => `<li>${mood}</li>`).join('');
+
+        document.getElementById('start-quest').onclick = function() {
+            document.querySelector('main').style.display = 'none';
+            document.getElementById('quest-page').style.display = 'flex';
+        };
+
+        document.getElementById('partners').onclick = function() {
+            document.getElementById('quest-page').style.display = 'none';
+            document.getElementById('partners-page').style.display = 'block';
+        };
+
+        document.getElementById('back-to-quest').onclick = function() {
+            document.getElementById('partners-page').style.display = 'none';
+            document.getElementById('quest-page').style.display = 'flex';
+        };
+
+        document.getElementById('back-to-main').onclick = function() {
+            document.getElementById('quest-page').style.display = 'none';
+            document.querySelector('main').style.display = 'block';
+        };
+
+        document.querySelectorAll('.icon').forEach(icon => {
+            icon.onclick = function() {
+                const category = icon.getAttribute('data-category');
+                let title = '';
+                let listItems = '';
+
+                switch (category) {
+                    case 'restaurants':
+                        title = 'Рестораны';
+                        listItems = '<li>Ресторан "Вкусно и точка"</li><li>Ресторан "Гурман"</li><li>Ресторан "Семь ветров"</li>';
+                        break;
+                    case 'museums':
+                        title = 'Музеи';
+                        listItems = '<li>Музей "Истории города"</li><li>Музей "Искусств"</li><li>Музей "Науки"</li>';
+                        break;
+                    case 'exhibitions':
+                        title = 'Выставки';
+                        listItems = '<li>Выставка "Современное искусство"</li><li>Выставка "Дизайна"</li>';
+                        break;
+                    case 'stores':
+                        title = 'Магазины';
+                        listItems = '<li>Магазин "Лучшие товары"</li><li>Магазин "Электроника"</li>';
+                        break;
+                    case 'cafes':
+                        title = 'Кофейни';
+                        listItems = '<li>Кофейня "Ароматная чашка"</li><li>Кофейня "Кофе и сладости"</li>';
+                        break;
+                    case 'theaters':
+                        title = 'Театры';
+                        listItems = '<li>Театр "Золотая маска"</li><li>Театр "Комедия"</li>';
+                        break;
+                    case 'others':
+                        title = 'Остальные категории';
+                        listItems = '<li>Парк "Зеленая зона"</li><li>Спортзал "Фитнес"</li>';
+                        break;
+                }
+
+                document.getElementById('category-title').innerHTML = title;
+                document.getElementById('category-list').innerHTML = listItems;
+                document.getElementById('quest-page').style.display = 'none';
+                document.getElementById('category-page').style.display = 'block';
+            };
+        });
+
+        document.getElementById('back-to-icons').onclick = function() {
+            document.getElementById('category-page').style.display = 'none';
+            document.querySelector('main').style.display = 'block';
+        };
+    });
+</script>
+
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
 </body>
 </html>

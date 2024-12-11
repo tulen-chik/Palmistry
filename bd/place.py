@@ -1,9 +1,10 @@
 from config import Session
 from models.place import Place
+from bd.user import get_user
 
 def add_place(id_user, name, avatar=None, points=None, review=None):
     session = Session()
-    new_place = Place(id_user=id_user, name=name, avatar=avatar, points=points, review=review)
+    new_place = Place(id_user=get_user(id_user).id, name=name, avatar=avatar, points=points, review=review)
     session.add(new_place)
     session.commit()
     session.close()
@@ -36,7 +37,9 @@ def get_all_places(sort_by_visits=False, sort_by_points=False):
 
     results = query.all()
     session.close()
-    return results
+
+    # Возвращаем только необходимые поля
+    return [(name, count if sort_by_visits else total_points) for name, count, total_points in results]
 
 def update_place(place_id, name=None, avatar=None, points=None, review=None):
     session = Session()

@@ -6,22 +6,47 @@ from telebot import types
 from bd.place import get_all_places
 from telebot.types import KeyboardButton, ReplyKeyboardMarkup
 import telebot
+from services.images import edit_image_p
 import os
 
-def response_profile(message):
-    # Получение топ-3 самых посещаемых мест
-    top_visits = get_all_places(sort_by_visits=True)[:3]
+@bot.callback_query_handler(func=lambda call: True)
+def handle_callback_query(call):
+    if call.data == 'top_visits':
+        response_profile(call.message, 'top_visits')
+    elif call.data == 'top_points':
+        response_profile(call.message, 'top_points')
 
-    # Получение топ-3 мест с наибольшими очками
-    top_points = get_all_places(sort_by_points=True)[:3]
+def response_profile(message, top_type):
+    user_id = message.from_user.id
 
-    response = "🏆 **Топ 3 самых посещаемых мест:**\n"
-    for place, visit_count in top_visits:
-        response += f"- {place.name}: {visit_count} визитов\n"
+    if top_type == 'top_visits':
+        top_places = get_all_places(sort_by_visits=True)[:3]
+        place_names = [place[0] for place in top_places]
+        avatar_image_urls = [
+            f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={place[1]}&key={os.environ['GOOGLE_MAPS_KEY']}"
+            for place in top_places
+        ]
+        output_image_path = 'public/top_visits_image.png'
+        response_text = "🏆 **Топ 3 самых посещаемых мест:**\n" + "\n".join([f"- {name}" for name in place_names])
+    elif top_type == 'top_points':
+        top_places = get_all_places(sort_by_points=True)[:3]
+        place_names = [place[0] for place in top_places]
+        avatar_image_urls = [
+            f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={place[1]}&key={os.environ['GOOGLE_MAPS_KEY']}"
+            for place in top_places
+        ]
+        output_image_path = 'public/top_points_image.png'
+        response_text = "🌟 **Топ 3 мест с наибольшими очками:**\n" + "\n".join([f"- {name}" for name in place_names])
+    else:
+        bot.send_message(user_id, "Некорректный тип запроса.")
+        return
 
-    response += "\n🌟 **Топ 3 мест с наибольшими очками:**\n"
-    for place, _ in top_points:
-        response += f"- {place.name}: {place.points} очков\n"
+    # Отправляем текстовый список мест пользователю
+    bot.send_message(user_id, response_text, parse_mode='Markdown')
 
-    # Отправка ответа пользователю
-    bot.send_message(message.chat.id, response, parse_mode='Markdown')
+    # Редактируем изображение с аватарами и названиями мест
+    edit_image_p(bg_image_path='public/bg.png', avatar_image_urls=avatar_image_urls, place_names=place_names, output_image_path=output_image_path)
+
+    # Отправляем измененное изображение пользователю
+    with open(output_image_path, 'rb') as photo:
+        bot.send_photo(user_id, photo)
