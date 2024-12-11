@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="dabe24ab-c1c5-401c-96c4-878a8810e2f3" name="Changes" comment="fixed --&gt; all database issues">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/bot.py" afterDir="false" />
@@ -11,6 +12,20 @@
       <change beforePath="$PROJECT_DIR$/handlers/place_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/handlers/place_handler.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/google_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/google_service.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/user_service.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/user_service.py" afterDir="false" />
+=======
+    <list default="true" id="dabe24ab-c1c5-401c-96c4-878a8810e2f3" name="Changes" comment="created base">
+      <change afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api_server/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api_server/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/api_server/run.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+>>>>>>> origin/main
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +40,6 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -42,6 +56,7 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
+<<<<<<< HEAD
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Python.bot.executor&quot;: &quot;Run&quot;,
@@ -227,10 +242,24 @@
       <method v="2" />
     </configuration>
   </component>
+=======
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.bot.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.profile_handler.executor": "Run",
+    "Python.start_handler.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Merging main",
+    "last_opened_file_path": "D:/Downloads/Palmistry-main"
+  }
+}]]></component>
+>>>>>>> origin/main
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-50da183f06c8-2887949eec09-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.13135.95" />
+        <option value="bundled-python-sdk-5a2391486177-d3b881c8e49f-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-233.13763.11" />
       </set>
     </attachedChunks>
   </component>
@@ -242,9 +271,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733825990850</updated>
+<<<<<<< HEAD
       <workItem from="1733849977320" duration="3143000" />
       <workItem from="1733853906984" duration="19203000" />
       <workItem from="1733895213132" duration="2297000" />
+=======
+>>>>>>> origin/main
     </task>
     <task id="LOCAL-00001" summary="created base">
       <option name="closed" value="true" />
@@ -270,6 +302,7 @@
       <option name="project" value="LOCAL" />
       <updated>1733846531861</updated>
     </task>
+<<<<<<< HEAD
     <task id="LOCAL-00004" summary="added --&gt; full database and almost connected api">
       <option name="closed" value="true" />
       <created>1733864370013</created>
@@ -287,10 +320,10 @@
       <updated>1733873889858</updated>
     </task>
     <option name="localTasksCounter" value="6" />
+=======
+    <option name="localTasksCounter" value="4" />
+>>>>>>> origin/main
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="RECENT_FILTERS">
@@ -332,8 +365,23 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="added —&gt; start processing" />
     <MESSAGE value="added --&gt; profile processing" />
+<<<<<<< HEAD
     <MESSAGE value="added --&gt; full database and almost connected api" />
     <MESSAGE value="fixed --&gt; all database issues" />
     <option name="LAST_COMMIT_MESSAGE" value="fixed --&gt; all database issues" />
+=======
+    <option name="LAST_COMMIT_MESSAGE" value="added —&gt; start processing" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/config.py</url>
+          <line>1</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+>>>>>>> origin/main
   </component>
 </project>

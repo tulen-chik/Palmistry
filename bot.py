@@ -1,5 +1,5 @@
 import telebot
-from config import Base, engine, bot
+from config import Base, engine, bot, user_profiles
 from bd.seeder import seed_moods, seed_type_places
 from handlers.start_handler import start_handler, choose_personality
 from handlers.location_handler import handle_location
@@ -8,6 +8,7 @@ from handlers.filter_handler import filter_places
 from handlers.coupon_handler import start_location_request, start_location_response, place_selection_request
 from utils.keyboard import generate_main_menu_keyboard
 from handlers.location_handler import send_places
+# from AI import AI
 
 @bot.message_handler(commands=['start'])
 def start_command(message):
@@ -44,9 +45,9 @@ def filter_command(message):
 def request_location(message):
     start_location_request(message)
 
-@bot.message_handler(func=lambda message: user_states.get(message.from_user.id, {}).get('awaiting_rating', False) and
+@bot.message_handler(func=lambda message: user_profiles.get(message.from_user.id, {}).get('awaiting_rating', False) and
                                           message.text in [place['название'] for place in
-                                                           user_states[message.from_user.id]['places']])
+                                                           user_profiles[message.from_user.id]['places']])
 def handle_place_selection(message):
     place_selection_request(message)
 
@@ -60,6 +61,7 @@ def main():
     Base.metadata.create_all(engine)
     seed_moods()
     seed_type_places()
+    # AI.initAI()
     register_profile_handlers(bot)  # Register profile handlers
     bot.polling(none_stop=True)
 

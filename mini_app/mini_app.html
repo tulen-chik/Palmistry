@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mini_app.css">
+    <title>Социальные сети</title>
+</head>
+<body>
+    <header>
+        <div class="search-bar">
+            <input type="text" placeholder="Выполните поиск по шаблонам и дизайнам">
+        </div>
+    </header>
+
+    <main>
+        <div class="banner">
+            <h1>Откройте для себя соцсети</h1>
+            <button>Что нового?</button>
+        </div>
+
+        <div class="icon-container">
+            <div class="icon">Документ</div>
+            <div class="icon">Интерактив на доске</div>
+            <div class="icon">Презентация</div>
+            <div class="icon">Видео</div>
+            <div class="icon">Сайт</div>
+            <div class="icon">Настраиваемый мой размер</div>
+            <div class="icon">Загрузить</div>
+        </div>
+
+        <section class="designs">
+            <h2>Последние дизайны</h2>
+            <div class="design">Создай изображение</div>
+            <div class="design">Напиши текст</div>
+            <div class="design">Измени мой размер</div>
+            <div class="design">Удаленный элемент</div>
+        </section>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #f5f5f5;
+            }
+
+            header {
+                background-color: #333;
+                padding: 20px;
+            }
+
+            .search-bar {
+                display: flex;
+                justify-content: center;
+            }
+
+            .search-bar input {
+                width: 60%;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+            }
+
+            .banner {
+                background-color: #ff4c4c;
+                color: white;
+                text-align: center;
+                padding: 40px 20px;
+            }
+
+            .banner h1 {
+                margin: 0;
+            }
+
+            .banner button {
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                background-color: #fff;
+                color: #ff4c4c;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .icon-container {
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                margin: 20px 0;
+            }
+
+            .icon {
+                background-color: white;
+                border-radius: 10px;
+                margin: 10px;
+                padding: 15px;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                flex: 1 0 150px; /* позволяет элементам растягиваться */
+            }
+
+            .designs {
+                text-align: center;
+                margin-top: 20px;
+            }
+
+            .design {
+                background-color: #e0e0e0;
+                margin: 10px;
+                padding: 15px;
+                border-radius: 10px;
+                display: inline-block;
+            }
+        </style>
+    </main>
+    <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
+</body>
+</html>
