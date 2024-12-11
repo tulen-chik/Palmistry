@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dabe24ab-c1c5-401c-96c4-878a8810e2f3" name="Changes" comment="created base">
-      <change afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_server/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_server/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/api_server/run.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/run.py" afterDir="false" />
+    <list default="true" id="dabe24ab-c1c5-401c-96c4-878a8810e2f3" name="Changes" comment="added --&gt; mini_game_prototype">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -54,7 +44,7 @@
     "Python.start_handler.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "main",
     "last_opened_file_path": "D:/Downloads/Palmistry-main"
   }
 }]]></component>
