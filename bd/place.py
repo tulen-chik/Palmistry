@@ -14,6 +14,30 @@ def get_place(place_id):
     session.close()
     return place
 
+
+from sqlalchemy import func
+
+
+def get_all_places(sort_by_visits=False, sort_by_points=False):
+    session = Session()
+
+    # Начальный запрос к таблице Place с агрегацией для подсчета визитов и суммированием очков
+    query = session.query(
+        Place.name,
+        func.count(Place.id).label('count'),
+        func.sum(Place.points).label('total_points')
+    ).group_by(Place.name)
+
+    # Сортировка по количеству мест или очков
+    if sort_by_visits:
+        query = query.order_by(func.count(Place.id).desc())
+    elif sort_by_points:
+        query = query.order_by(func.sum(Place.points).desc())
+
+    results = query.all()
+    session.close()
+    return results
+
 def update_place(place_id, name=None, avatar=None, points=None, review=None):
     session = Session()
     place = session.query(Place).filter_by(id=place_id).first()

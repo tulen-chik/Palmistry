@@ -9,6 +9,11 @@ from handlers.coupon_handler import start_location_request, start_location_respo
 from utils.keyboard import generate_main_menu_keyboard
 from handlers.location_handler import send_places
 # from AI import AI
+from handlers.portfolio_handler import response_profile
+
+@bot.message_handler(commands=['profile'])
+def profile_handler(message):
+    response_profile(message)
 
 @bot.message_handler(commands=['start'])
 def start_command(message):
@@ -33,13 +38,10 @@ def callback_handler(call):
 def location_command(message):
     handle_location(message)
 
-@bot.message_handler(commands=['profile'])
-def profile_command(message):
-    bot.send_message(message.chat.id, "Загрузка профиля...", reply_markup=generate_main_menu_keyboard())
-
 @bot.message_handler(commands=['filter'])
 def filter_command(message):
     filter_places(message)
+
 
 @bot.message_handler(commands=['me'])
 def request_location(message):
