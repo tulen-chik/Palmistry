@@ -46,9 +46,9 @@ def edit_image(bg_image_path, avatar_image_url, place_name, output_image_path):
     bg_image.save(output_image_path)
 
 
-def edit_image_p(bg_image_path, avatar_image_urls, place_names, output_image_path):
+def edit_image_p(avatar_image_urls, place_names, output_image_path):
     # Загружаем фон
-    bg_image = Image.open(bg_image_path)
+    bg_image = Image.open('public/bg_p.png')
 
     # Определяем размеры изображения и количество аватаров
     avatar_size = 800

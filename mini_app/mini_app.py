@@ -1,17 +1,23 @@
 import os
 from aiogram import Bot, Dispatcher, types
-from dotenv import load_dotenv
 from aiogram.types.web_app_info import WebAppInfo
+from bd.type_place import get_all_type_places
+from bd.mood import get_all_moods
+import telebot
 
-load_dotenv()
+from config import bot
+@bot.message_handler(commands=['game'])
+def game(message):
+    user_id = message.from_user.id
+    type_places = get_all_type_places()  # Получение данных из таблицы TypePlace
+    moods = get_all_moods()  # Получение данных из таблицы Mood
 
-TELEGRAM_BOT_TOKEN = os.getenv('TELEGRAM_BOT_TOKEN')
+    type_places_str = ','.join([place.name for place in type_places])
+    moods_str = ','.join([mood.name for mood in moods])
 
-bot = Bot(token=TELEGRAM_BOT_TOKEN)
-dp = Dispatcher()
+    game_url = f'https://github.com/KQnok/mini?type_places={type_places_str}&moods={moods_str}'
 
-@dp.message_handler(commands=['game'])
-async def game(message: types.Message):
-    markup = types.ReplyKeyboardMarkup()
-    markup.add(types.KeyboardButton('Пройти квест', web_app=WebAppInfo(url='https://github.com/KQnok/mini')))
-    await message.answer('мяу', reply_markup=markup)
+    markup = telebot.types.ReplyKeyboardMarkup()
+    markup.add(telebot.types.KeyboardButton('Пройти квест', web_app=telebot.types.WebAppInfo(url=game_url)))
+
+    bot.send_message(message.chat.id, 'мяу', reply_markup=markup)
