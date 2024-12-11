@@ -8,7 +8,8 @@ from handlers.filter_handler import filter_places
 from handlers.coupon_handler import start_location_request, start_location_response, place_selection_request
 from utils.keyboard import generate_main_menu_keyboard
 from handlers.location_handler import send_places
-# from AI import AI
+from AI import AI
+import logging
 
 @bot.message_handler(commands=['start'])
 def start_command(message):
@@ -61,7 +62,8 @@ def main():
     Base.metadata.create_all(engine)
     seed_moods()
     seed_type_places()
-    # AI.initAI()
+    AI.initAI()
+    logging.warning("sosi")
     register_profile_handlers(bot)  # Register profile handlers
     bot.polling(none_stop=True)
 

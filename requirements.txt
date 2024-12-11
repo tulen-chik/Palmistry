@@ -3,3 +3,5 @@ requests
 sqlalchemy
 psycopg2
 Pillow
+geopy
+transformers

@@ -2,6 +2,7 @@ import requests
 import os
 import json
 from config import engine
+import logging
 
 def find_nearby_places(latitude, longitude, places_query, radius=5000):
     # Формируем URL для запроса к API Google Places
@@ -17,10 +18,12 @@ def find_nearby_places(latitude, longitude, places_query, radius=5000):
 
         # Обрабатываем полученные данные
         for result in data.get('results', [])[1:6]:
+            logging.warning(result)
             name = result['name']
             vicinity = result.get('vicinity', 'Нет описания')
-            rating = result.get('rating', 'Нет оценок')
+            rating = result.get('rating', 0)
             coordinates = result.get('geometry').get('location')
+            category = result.get('types')
             if 'photos' in result and len(result['photos']) > 0:
                 photo_reference = result['photos'][0].get('photo_reference', 'Нет photo_reference')
             else:
@@ -30,7 +33,8 @@ def find_nearby_places(latitude, longitude, places_query, radius=5000):
                 'местонахождение': vicinity,
                 'оценка': rating,
                 'аватар': photo_reference,
-                'координаты': coordinates
+                'координаты': coordinates,
+                'категория': category,
             })
 
         return places
