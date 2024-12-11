@@ -3,10 +3,18 @@ from PIL import Image, ImageDraw, ImageFont
 from io import BytesIO
 
 def download_image(url):
-    response = requests.get(url)
-    if response.status_code == 200:
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an error for bad responses
         return Image.open(BytesIO(response.content))
-    else:
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err} - URL: {url}")
+        raise Exception("Could not download the image.")
+    except requests.exceptions.ConnectionError as conn_err:
+        print(f"Connection error occurred: {conn_err} - URL: {url}")
+        raise Exception("Could not download the image.")
+    except Exception as err:
+        print(f"An error occurred: {err} - URL: {url}")
         raise Exception("Could not download the image.")
 
 def edit_image(bg_image_path, avatar_image_url, place_name, output_image_path):
