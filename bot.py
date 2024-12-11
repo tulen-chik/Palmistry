@@ -44,19 +44,24 @@ def filter_command(message):
 
 @bot.message_handler(commands=['me'])
 def request_location(message):
+    user_profiles[message.from_user.id]['awaiting_location'] = True
     start_location_request(message)
 
 @bot.message_handler(func=lambda message: user_profiles.get(message.from_user.id, {}).get('awaiting_rating', False) and
                                           message.text in [place['название'] for place in
                                                            user_profiles[message.from_user.id]['places']])
 def handle_place_selection(message):
+    user_profiles[message.from_user.id]['awaiting_rating'] = False
     place_selection_request(message)
 
 
 @bot.message_handler(content_types=["location"])
 def handle_location(message):
-    start_location_response(message)
-
+    if user_profiles.get(message.from_user.id, {}).get('awaiting_location', False):
+        user_profiles[message.from_user.id]['awaiting_location'] = False
+        start_location_response(message)
+    else:
+        handle_location(message)
 
 @bot.message_handler(content_types=["game"])
 def game_start(message):
