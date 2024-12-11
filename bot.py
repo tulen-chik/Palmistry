@@ -5,20 +5,13 @@ from handlers.start_handler import start_handler, choose_personality
 from handlers.location_handler import handle_location
 from handlers.profile_handler import register_profile_handlers  # Import the registration function
 from handlers.filter_handler import filter_places
-from handlers.coupon_handler import start_location_request, start_location_response, place_selection_request
+from handlers.coupon_handler import place_selection_request
+from handlers.start_handler import start_location_request, start_location_response
 from utils.keyboard import generate_main_menu_keyboard
 from handlers.location_handler import send_places
-from mini_app.mini_app import game
-# from AI import AI
-from handlers.portfolio_handler import response_profile
-
-@bot.message_handler(content_types=["game"])
-def game_start(message):
-    game(message)
-
-@bot.message_handler(commands=['profile'])
-def profile_handler(message):
-    response_profile(message)
+# from mini_app.mini_app import game
+from AI import AI
+import logging
 
 @bot.message_handler(commands=['start'])
 def start_command(message):
@@ -43,10 +36,13 @@ def callback_handler(call):
 def location_command(message):
     handle_location(message)
 
+@bot.message_handler(commands=['profile'])
+def profile_command(message):
+    bot.send_message(message.chat.id, "Загрузка профиля...", reply_markup=generate_main_menu_keyboard())
+
 @bot.message_handler(commands=['filter'])
 def filter_command(message):
     filter_places(message)
-
 
 @bot.message_handler(commands=['me'])
 def request_location(message):
@@ -64,11 +60,17 @@ def handle_location(message):
     start_location_response(message)
 
 
+@bot.message_handler(content_types=["game"])
+def game_start(message):
+    game(message)
+
+
 def main():
     Base.metadata.create_all(engine)
     seed_moods()
     seed_type_places()
-    # AI.initAI()
+    AI.initAI()
+    logging.warning("sosi")
     register_profile_handlers(bot)  # Register profile handlers
     bot.polling(none_stop=True)
 

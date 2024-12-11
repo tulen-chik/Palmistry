@@ -224,30 +224,7 @@
         }
     </style>
 
-<script>
-    // Функция для извлечения параметров из URL
-    function getQueryParams() {
-        const params = {};
-        window.location.search.substring(1).split("&").forEach(function(pair) {
-            const [key, value] = pair.split('=');
-            params[decodeURIComponent(key)] = decodeURIComponent(value);
-        });
-        return params;
-    }
-
-    // Извлечение данных из URL
-    const queryParams = getQueryParams();
-    const typePlaces = queryParams.type_places ? queryParams.type_places.split(',') : [];
-    const moods = queryParams.moods ? queryParams.moods.split(',') : [];
-
-    // Заполнение списков на странице
-    document.addEventListener('DOMContentLoaded', function() {
-        const typePlacesList = document.getElementById('type-places-list');
-        const moodsList = document.getElementById('moods-list');
-
-        typePlacesList.innerHTML = typePlaces.map(place => `<li>${place}</li>`).join('');
-        moodsList.innerHTML = moods.map(mood => `<li>${mood}</li>`).join('');
-
+    <script>
         document.getElementById('start-quest').onclick = function() {
             document.querySelector('main').style.display = 'none';
             document.getElementById('quest-page').style.display = 'flex';
@@ -316,8 +293,7 @@
             document.getElementById('category-page').style.display = 'none';
             document.querySelector('main').style.display = 'block';
         };
-    });
-</script>
+    </script>
 
     <script src="https://telegram.org/js/telegram-web-app.js?56"></script>
 </body>
