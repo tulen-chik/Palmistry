@@ -3,9 +3,9 @@ import os
 import json
 from config import engine
 
-def find_nearby_places(latitude, longitude, places_query):
+def find_nearby_places(latitude, longitude, places_query, radius=5000):
     # Формируем URL для запроса к API Google Places
-    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={latitude},{longitude}&type={places_query}&radius=5000&key={os.environ['GOOGLE_MAPS_KEY']}"
+    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={latitude},{longitude}&language=ru-RU&type={places_query}&radius={radius}&key={os.environ['GOOGLE_MAPS_KEY']}"
 
     # Отправляем GET-запрос
     response = requests.get(url)
@@ -16,17 +16,21 @@ def find_nearby_places(latitude, longitude, places_query):
         places = []
 
         # Обрабатываем полученные данные
-        for result in data.get('results', []):
+        for result in data.get('results', [])[1:6]:
             name = result['name']
             vicinity = result.get('vicinity', 'Нет описания')
             rating = result.get('rating', 'Нет оценок')
-            avatar = json.loads(result.get('photos', 'Нет аватара')[0]).get('photo_reference')
-
+            coordinates = result.get('geometry').get('location')
+            if 'photos' in result and len(result['photos']) > 0:
+                photo_reference = result['photos'][0].get('photo_reference', 'Нет photo_reference')
+            else:
+                photo_reference = 'Нет фото'
             places.append({
                 'название': name,
                 'местонахождение': vicinity,
                 'оценка': rating,
-                'аватар': avatar,
+                'аватар': photo_reference,
+                'координаты': coordinates
             })
 
         return places

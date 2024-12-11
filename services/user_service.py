@@ -1,4 +1,4 @@
-user_profiles = {}
+from config import user_profiles
 
 def update_profile(user_id, personality_choice):
     if user_id not in user_profiles:
