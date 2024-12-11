@@ -15,7 +15,7 @@ def game(message):
     type_places_str = ','.join([place.name for place in type_places])
     moods_str = ','.join([mood.name for mood in moods])
 
-    game_url = f'https://github.com/KQnok/mini?type_places={type_places_str}&moods={moods_str}'
+    game_url = f'https://shpack.monster?type_places={type_places_str}&moods={moods_str}'
 
     markup = telebot.types.ReplyKeyboardMarkup()
     markup.add(telebot.types.KeyboardButton('Пройти квест', web_app=telebot.types.WebAppInfo(url=game_url)))
