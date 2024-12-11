@@ -5,6 +5,7 @@ from handlers.location_handler import handle_location
 from handlers.profile_handler import register_profile_handlers  # Import the registration function
 from handlers.filter_handler import filter_places
 from utils.keyboard import generate_main_menu_keyboard
+from mini_app.mini_app import game
 
 bot = telebot.TeleBot(API_TOKEN)
 
@@ -27,6 +28,11 @@ def profile_command(message):
 @bot.message_handler(commands=['filter'])
 def filter_command(message):
     filter_places(message)
+
+@bot.message_handler(commands=['game'])
+def game_command(message):
+    game(message)
+
 
 def main():
     register_profile_handlers(bot)  # Register profile handlers
