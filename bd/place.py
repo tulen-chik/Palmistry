@@ -38,8 +38,13 @@ def get_all_places(sort_by_visits=False, sort_by_points=False):
     results = query.all()
     session.close()
 
-    # Возвращаем только необходимые поля
-    return [(name, count if sort_by_visits else total_points) for name, count, total_points in results]
+    # Возвращаем только необходимые поля, добавляя None для отсутствующих значений
+    if sort_by_visits:
+        return [(name, count, None) for name, count, total_points in results]
+    elif sort_by_points:
+        return [(name, None, total_points) for name, count, total_points in results]
+    else:
+        return []
 
 def update_place(place_id, name=None, avatar=None, points=None, review=None):
     session = Session()
