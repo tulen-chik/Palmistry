@@ -11,17 +11,17 @@ import os
 
 @bot.callback_query_handler(func=lambda call: True)
 def handle_callback_query(call):
+    user_id = call.from_user.id
     if call.data == 'top_visits':
-        response_profile(call.message, 'top_visits')
+        response_profile(user_id, 'top_visits')
     elif call.data == 'top_points':
-        response_profile(call.message, 'top_points')
+        response_profile(user_id, 'top_points')
 
-def response_profile(message, top_type):
-    user_id = message.from_user.id
 
+def response_profile(user_id, top_type):
     if top_type == 'top_visits':
         top_places = get_all_places(sort_by_visits=True)[:3]
-        place_names = [place[0] for place in top_places]
+        place_names = [place[0].avatar for place in top_places]
         avatar_image_urls = [
             f"https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference={place[1]}&key={os.environ['GOOGLE_MAPS_KEY']}"
             for place in top_places
@@ -45,7 +45,7 @@ def response_profile(message, top_type):
     bot.send_message(user_id, response_text, parse_mode='Markdown')
 
     # Редактируем изображение с аватарами и названиями мест
-    edit_image_p(bg_image_path='public/bg.png', avatar_image_urls=avatar_image_urls, place_names=place_names, output_image_path=output_image_path)
+    edit_image_p(avatar_image_urls=avatar_image_urls, place_names=place_names, output_image_path=output_image_path)
 
     # Отправляем измененное изображение пользователю
     with open(output_image_path, 'rb') as photo:
