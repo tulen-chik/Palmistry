@@ -14,4 +14,5 @@ def handle_location(message):
 
     # Получение мест на основе обновленных координат
     places = get_places(user_id, coordinates.latitude, coordinates.longitude)
+    print(places)
     send_places(user_id, places)

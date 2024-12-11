@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import Column, Integer, String, ForeignKey, Boo
 from sqlalchemy.orm import relationship
 from config import Base
 
@@ -10,7 +10,7 @@ class Place(Base):
     name = Column(String(100), nullable=False)
     avatar = Column(String(200), nullable=True)
     points = Column(Integer, nullable=True)
-    review = Column(String(255), nullable=True)
+    review = Column(Boolean, nullable=True)
 
     # Связь с моделью Users
     user = relationship('Users', backref='places', lazy=True)
