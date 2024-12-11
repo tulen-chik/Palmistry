@@ -6,7 +6,7 @@ from handlers.location_handler import handle_location
 from handlers.profile_handler import register_profile_handlers  # Import the registration function
 from handlers.filter_handler import filter_places
 from handlers.coupon_handler import place_selection_request
-from handlers.start_handler import start_location_request, start_location_response
+from handlers.start_handler import start_location_request, start_location_response, start_location_response_categorized
 from utils.keyboard import generate_main_menu_keyboard
 from handlers.location_handler import send_places
 # from mini_app.mini_app import game
@@ -64,6 +64,21 @@ def handle_location(message):
 def game_start(message):
     game(message)
 
+@bot.message_handler(func=lambda message: True)
+def handle_message(message):
+    if message.chat.id in user_profiles and user_profiles[message.chat.id] == "main_menu":
+        if message.text == "🍽️ Рестораны":
+            start_location_response_categorized(message,"Кафе")
+        elif message.text == "🌳 Парки":
+            start_location_response_categorized(message,"Парк")
+        elif message.text == "📸 Фотографические места":
+            start_location_response_categorized(message,"Библиотека")
+        elif message.text == "🛍️ Магазины":
+            start_location_response_categorized(message,"Игровые кафе")
+        elif message.text == "🏛️ Музеи":
+            start_location_response_categorized(message,"Музеи")
+        else:
+            bot.send_message(message.chat.id, "Пожалуйста, выберите действие из меню.")
 
 def main():
     Base.metadata.create_all(engine)

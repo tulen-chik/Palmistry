@@ -140,7 +140,7 @@ def recommend_places(user: User_dataclass, places, interested_categories: List[s
     for place in places:
         place_location = (place['координаты']['lat'], place['координаты']['lat'])
         distance = calculate_distance(user_location, place_location)
-        category_match = place['категория'] in interested_categories
+        category_match =category_resolving_map[place['категория']] in interested_categories
         #mood_match = place.mood_id == users_mood
         score = calculate_score(distance, int(place['оценка']), category_match, False, False)
         recommendations.append((place, score))

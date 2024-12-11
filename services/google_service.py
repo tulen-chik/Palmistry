@@ -34,8 +34,9 @@ def find_nearby_places(latitude, longitude, places_query, radius=5000):
                 'оценка': rating,
                 'аватар': photo_reference,
                 'координаты': coordinates,
-                'категория': category,
+                'категория': category[0],
             })
+            logging.warning(category)
 
         return places
     else:
